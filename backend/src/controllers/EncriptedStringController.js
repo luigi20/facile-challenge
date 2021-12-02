@@ -1,17 +1,19 @@
 const connection = require('../database/connection');
 const crypto = require('crypto');
-const ENC_KEY = process.env.ENC_KEY;
-const IV = process.env.IV;
+const encKey = process.env.KEY;
+const iv = process.env.IV;
 
 function encrypted(phrase) {
-    let cipher = crypto.createCipheriv('aes-256-cbc', ENC_KEY, IV);
+    console.log(typeof iv);
+    let cipher = crypto.createCipheriv('aes-256-cbc', encKey, iv);
     let encrypted = cipher.update(phrase, 'utf8', 'base64');
     encrypted += cipher.final('base64');
     return encrypted;
 }
 
 function decrypted(phrase) {
-    let decipher = crypto.createDecipheriv('aes-256-cbc', ENC_KEY, IV);
+    let decipher = crypto.createDecipheriv('aes-256-cbc', encKey, iv);
+    console.log(decipher);
     let decrypted = decipher.update(phrase, 'base64', 'utf8');
     return (decrypted + decipher.final('utf8'));
 }
@@ -28,7 +30,7 @@ module.exports = {
                 });
             return res.json(insertedString);
         } catch (error) {
-            return res.json({ code: "E_VALIDATION_FAILURE", message: "O campo \"name\" é obrigatório" });
+            return res.json(error);
         }
     },
 
@@ -36,12 +38,15 @@ module.exports = {
         const { id } = req.params;
         try {
             let search = await connection('encryptedString').where('id', '=', id).select('*').first();
+
             if (!search) {
                 return res.status(404).send({ Error: "String Not Found!!!" });
             }
-            const desencrypt = decrypted(search.encrypted_name);
-            search.encrypted_name = desencrypt;
-            return res.json(search);
+
+            let desencrypt = decrypted(search.encrypted_name);
+            //      console.log(desencrypt);
+            // search.encrypted_name = desencrypt;
+            return res.json(desencrypt);
         } catch (error) {
             return res.json({ code: "E_VALIDATION_FAILURE", message: "O campo \"id\" é obrigatório" });
         }
