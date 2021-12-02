@@ -39,7 +39,6 @@ module.exports = {
             if (!search) {
                 return res.status(404).send({ Error: "String Not Found!!!" });
             }
-            return res.json(search);
             let encrypted_name = decrypted(search.encrypted_name);
             return res.json({ id: search.id, encrypted_name });
         } catch (error) {
