@@ -42,7 +42,8 @@ module.exports = {
             let encrypted_name = decrypted(search.encrypted_name);
             return res.json({ id: search.id, encrypted_name });
         } catch (error) {
-            return res.json({ code: "E_VALIDATION_FAILURE", message: "O campo \"id\" é obrigatório" });
+            return res.json(error.message);
+            //  return res.json({ code: "E_VALIDATION_FAILURE", message: "O campo \"id\" é obrigatório" });
         }
     }
 }
