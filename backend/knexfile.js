@@ -18,7 +18,11 @@ module.exports = {
     },
     migrations: {
       directory: './src/database/migrations'
+    },
+    seeds: {
+      directory: './src/database/seeds'
     }
-  }
+  },
+
 
 };
