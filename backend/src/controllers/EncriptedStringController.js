@@ -40,7 +40,8 @@ module.exports = {
                 return res.status(404).send({ Error: "String Not Found!!!" });
             }
             let encrypted_name = decrypted(search.encrypted_name);
-            return res.json({ id: search.id, encrypted_name });
+            return encrypted_name;
+            //      return res.json({ id: search.id, encrypted_name });
         } catch (error) {
             return res.json({ code: "E_VALIDATION_FAILURE", message: "O campo \"id\" é obrigatório" });
         }
