@@ -36,12 +36,11 @@ module.exports = {
         const { id } = req.params;
         try {
             let search = await connection('encryptedString').where('id', '=', id).select('*').first();
-
             if (!search) {
                 return res.status(404).send({ Error: "String Not Found!!!" });
             }
-            let desencrypt = decrypted(search.encrypted_name);
-            return res.json(desencrypt);
+            let encrypted_name = decrypted(search.encrypted_name);
+            return res.json({ id: search.id, encrypted_name });
         } catch (error) {
             return res.json({ code: "E_VALIDATION_FAILURE", message: "O campo \"id\" é obrigatório" });
         }

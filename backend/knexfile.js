@@ -22,5 +22,25 @@ module.exports = {
     seeds: {
       directory: './src/database/seeds'
     }
+  },
+  development: {
+    client: 'pg',
+    connection: {
+      database: 'encrypted',
+      user: 'postgres',
+      password: '4l9u2i7s',
+      host: 'localhost',
+    },
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      directory: './src/database/migrations'
+    },
+    seeds: {
+      directory: './src/database/seeds'
+    }
   }
+
 };
