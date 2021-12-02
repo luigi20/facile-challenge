@@ -23,6 +23,4 @@ module.exports = {
       directory: './src/database/seeds'
     }
   },
-
-
 };
